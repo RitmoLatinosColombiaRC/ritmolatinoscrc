@@ -4,28 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Staff – Ritmo Latinos Colombia Radio Chat</title>
+  <meta name="description" content="Ritmo Latinos Colombia Radio Chat — La radio que prende tus sentidos.">
+  <link rel="icon" href="LogoRL.jpg" type="image/jpeg">
+
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #0b0c10;
       color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px 0;
+      font-size: 2.2rem;
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .card {
       background: #1f2833;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
       transition: 0.3s;
-      display: flex;
-      flex-direction: column;
-      width: 300px;
-      height: 400px;
     }
 
     .card:hover {
@@ -33,22 +47,22 @@
     }
 
     .card-img {
-      height: 50%; /* imagen ocupa la mitad superior */
-      background-size: cover;
-      background-position: center;
+      height: 180px;
+      background: #4b4c63;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: #ccc;
     }
 
     .info {
       padding: 15px;
       text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .info h3 {
-      margin: 0;
+      margin: 10px 0;
       font-size: 1.4rem;
       color: #66fcf1;
     }
@@ -56,62 +70,64 @@
     .info p {
       font-size: 0.9rem;
       color: #c5c6c7;
-      margin: 5px 0;
     }
 
-    .likes {
+    .stats {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-around;
+      background: #0b0c10;
+      padding: 10px 0;
       margin-top: 10px;
     }
 
-    .like-btn {
-      background: #ff5c5c;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+    .stat {
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
       font-size: 1.2rem;
-      color: white;
-      cursor: pointer;
-      margin-right: 10px;
-      transition: transform 0.2s;
-    }
-
-    .like-btn:hover {
-      transform: scale(1.2);
-    }
-
-    .like-count {
-      font-size: 1rem;
       color: #66fcf1;
+    }
+
+    .back {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back a {
+      color: #66fcf1;
+      text-decoration: none;
+      font-size: 1.2rem;
     }
   </style>
 </head>
-<body>
 
-  <div class="card">
-    <div class="card-img" style="background-image: url('DjAtomico.jpg');"></div>
-    <div class="info">
-      <div>
-        <h3>DJ Atomico</h3>
-        <p>Founder, Root, DJ</p>
-        <p>El BigBoss, Capricornio.</p>
-      </div>
-      <div class="likes">
-        <button class="like-btn" onclick="addLike(this)">❤</button>
-        <span class="like-count">0</span>
+<body>
+  <h1>Nuestro Staff</h1>
+
+  <div class="container">
+    <div class="grid">
+      <!-- Tarjeta ejemplo 1 -->
+      <div class="card">
+        <div class="card-img" style="background-image: url('DjAtomico.jpg'); background-size: cover; background-position: center;">
+        </div>
+        <div class="info">
+          <h3>DJ Atomico</h3>
+          <p>Founder, Root, Dj</p>
+          <p>El BigBoss, Capricornio.</p>
+          <div class="stats">
+            <div class="stat"><strong>99</strong> SKILL</div>
+            <div class="stat"><strong>99</strong> SKILL</div>
+            <div class="stat"><strong>99</strong> SKILL</div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="back">
+      <a href="index.html">← Volver al inicio</a>
+    </div>
   </div>
-
-  <script>
-    function addLike(button) {
-      const count = button.nextElementSibling;
-      count.textContent = parseInt(count.textContent) + 1;
-    }
-  </script>
-
 </body>
 </html>
