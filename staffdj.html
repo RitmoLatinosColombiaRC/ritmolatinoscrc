@@ -174,54 +174,58 @@
     </div>
   </div>
 
-  <script>
-    // ===== URL de la API de SheetDB =====
-    const API_URL = 'https://sheetdb.io/api/v1/12c925tu2uzxh';
+ <script>
+const API_URL = 'https://sheetdb.io/api/v1/12c925tu2uzxh';
 
-    // ===== Función para sincronizar likes con SheetDB =====
-    async function syncLikes() {
-      const cards = document.querySelectorAll('.card');
+// ===== Cargar likes desde SheetDB y actualizar contadores =====
+async function loadLikes() {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    const cards = document.querySelectorAll('.card');
 
-      cards.forEach(card => {
-        const btn = card.querySelector('.like-btn');
-        btn.addEventListener('click', async () => {
-          const id = card.dataset.id;
-          const span = card.querySelector('.like-count');
-          let count = parseInt(span.textContent) + 1;
-          span.textContent = count;
+    cards.forEach(card => {
+      const member = data.find(m => m.ID === card.dataset.id);
+      if (member) {
+        card.querySelector('.like-count').textContent = member.LIKES || 0;
+      }
+    });
 
-          try {
-            await fetch(`${API_URL}/ID/${id}`, {
-              method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ data: { LIKES: count } })
-            });
-          } catch (err) {
-            console.error('Error actualizando likes:', err);
-          }
-        });
-      });
-    }
+    // Después de cargar los likes, agregamos los eventos
+    attachLikeEvents();
+  } catch (err) {
+    console.error('Error cargando likes:', err);
+    attachLikeEvents(); // para que los botones sigan funcionando aunque falle la API
+  }
+}
 
-    // ===== Función para cargar los likes desde SheetDB =====
-    async function loadLikes() {
+// ===== Agregar eventos a los botones de like =====
+function attachLikeEvents() {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const btn = card.querySelector('.like-btn');
+    btn.addEventListener('click', async () => {
+      const id = card.dataset.id;
+      const span = card.querySelector('.like-count');
+      let count = parseInt(span.textContent) + 1;
+      span.textContent = count;
+
       try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        data.forEach(member => {
-          const card = document.querySelector(`.card[data-id="${member.ID}"]`);
-          if (card) {
-            card.querySelector('.like-count').textContent = member.LIKES || 0;
-          }
+        await fetch(`${API_URL}/ID/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: { LIKES: count } })
         });
       } catch (err) {
-        console.error('Error cargando likes:', err);
+        console.error('Error actualizando likes:', err);
       }
-    }
+    });
+  });
+}
 
-    // ===== Inicializar =====
-    loadLikes();
-    syncLikes();
-  </script>
+// ===== Inicializar =====
+loadLikes();
+</script>
+
 </body>
 </html>
