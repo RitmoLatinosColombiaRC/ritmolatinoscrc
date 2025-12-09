@@ -6,6 +6,7 @@
   <title>Staff – Ritmo Latinos Colombia Radio Chat</title>
   <meta name="description" content="Ritmo Latinos Colombia Radio Chat — La radio que prende tus sentidos.">
   <link rel="icon" href="LogoRL.jpg" type="image/jpeg">
+
   <style>
     body {
       margin: 0;
@@ -47,6 +48,8 @@
       justify-content: center;
       font-size: 40px;
       color: #ccc;
+      background-size: cover;
+      background-position: center;
     }
     .info {
       padding: 15px;
@@ -71,9 +74,28 @@
     .stat {
       text-align: center;
     }
+    .stars {
+      color: #f1c40f;
+      font-size: 1.3rem;
+    }
     .stat strong {
       display: block;
       font-size: 1.2rem;
+      color: #66fcf1;
+    }
+    .like-btn {
+      cursor: pointer;
+      user-select: none;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 0;
+      color: #ffffff;
+    }
+    .like-btn span.count {
+      font-size: 1.1rem;
       color: #66fcf1;
     }
     .back {
@@ -95,16 +117,24 @@
 
       <!-- Tarjeta ejemplo 1 -->
       <div class="card">
-        <div class="card-img" style="background-image: url('DjAtomico.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="card-img" style="background-image: url('DjAtomico.jpg');"></div>
+
         <div class="info">
           <h3>DJ Atomico</h3>
           <p>Founder, Root, Dj</p>
           <p>El BigBoss, Capricornio.</p>
+
           <div class="stats">
-            <div class="stat"><strong>99</strong>SKILL</div>
-            <div class="stat"><strong>99</strong>SKILL</div>
-            <div class="stat"><strong>99</strong>SKILL</div>
+            <div class="stat"><span class="stars">★★★★★</span></div>
+            <div class="stat"><span class="stars">★★★★☆</span></div>
+            <div class="stat"><span class="stars">★★★☆☆</span></div>
           </div>
+
+          <!-- Botón de Me Gusta -->
+          <div class="like-btn" onclick="toggleLike(this)">
+            👍 <span class="count">0</span>
+          </div>
+
         </div>
       </div>
 
@@ -114,6 +144,24 @@
       <a href="index.html">← Volver al inicio</a>
     </div>
   </div>
+
+  <!-- Script de Likes -->
+  <script>
+  function toggleLike(btn) {
+    let count = btn.querySelector(".count");
+    let number = parseInt(count.innerText);
+
+    if (btn.classList.contains("liked")) {
+      btn.classList.remove("liked");
+      count.innerText = number - 1;
+      btn.childNodes[0].nodeValue = "👍 ";
+    } else {
+      btn.classList.add("liked");
+      count.innerText = number + 1;
+      btn.childNodes[0].nodeValue = "❤️ ";
+    }
+  }
+  </script>
 
 </body>
 </html>
