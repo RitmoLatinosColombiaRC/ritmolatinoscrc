@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Staff – Ritmo Latinos Colombia Radio Chat</title>
-  <link rel="icon" href="img/LogoRL.jpg" type="image/jpeg">
+  <link rel="icon" href="img/LogoRL.jpg" type="image/jpeg" />
 
   <style>
     /* ===== Estilos generales ===== */
@@ -103,6 +103,12 @@
       background: #45a29e;
     }
 
+    .like-btn.disabled {
+      background: gray;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
     /* ===== Botón de regreso ===== */
     .back {
       text-align: center;
@@ -114,14 +120,24 @@
       text-decoration: none;
       font-size: 1.2rem;
     }
+
+    /* Mensajes de estado */
+    .status {
+      text-align: center;
+      margin-top: 12px;
+      color: #c5c6c7;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 
 <body>
   <h1>💫 Nuestro Staff 💫</h1>
-  
+
   <div class="container">
     <div class="grid" id="staff-grid">
+
+      <!-- --- (Mantengo tus 20 tarjetas exactamente como en el original) --- -->
 
       <!-- Tarjeta 1 -->
       <div class="card" data-id="1">
@@ -133,7 +149,7 @@
           <p>Virtudes: Ser el Big Boss.</p>
           <p>Programa: Llena tu cabeza de rock.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -147,7 +163,7 @@
           <p>Signo: Acuario.</p>
           <p>Virtudes: Hacer el bien, sin mirar a quien.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -161,7 +177,7 @@
           <p>Signo: Carpicornio.</p>
           <p>Virtudes: Honesta, simpática, empática.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -175,7 +191,7 @@
           <p>Signo: Virgo.</p>
           <p>Virtudes: Empatica, sincera y critica.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -189,12 +205,12 @@
           <p>Signo: Acuario.</p>
           <p>Virtudes: Servicial, independiente y visionaria.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
 
-      <!-- Tarjetas 6 a 20 -->
+      <!-- Tarjetas 6 a 20 (mismo contenido que el original) -->
       <div class="card" data-id="6">
         <div class="card-img" style="background-image: url('img/papasfritas.jpg');"></div>
         <div class="info">
@@ -202,8 +218,8 @@
           <p>Cumpleaños: 30/01.</p>
           <p>Signo: Acuario.</p>
           <p>Virtudes: Paciencia, templanza, perseverancia.</p>
-           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          <div class="stats">
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -216,7 +232,7 @@
           <p>Signo: Acuario.</p>
           <p>Virtudes: Respetuoso. introvertido y carismatico.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -229,7 +245,7 @@
           <p>Signo: Aries.</p>
           <p>Virtudes: Sincera, tierna y roamntica.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -242,7 +258,7 @@
           <p>Signo: Tauro.</p>
           <p>Virtudes: Escuchar, paciente y tolerante.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -255,7 +271,7 @@
           <p>Signo: Géminis.</p>
           <p>Virtudes: Amorosa, sincera y humanitaria.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -268,7 +284,7 @@
           <p>Signo: Virgo.</p>
           <p>Virtudes: Simpatico, alegre y optimista..</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -281,7 +297,7 @@
           <p>Signo: Virgo.</p>
           <p>Virtudes: Alegre, extrovertido y servicial.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -294,7 +310,7 @@
           <p>Signo: Libra.</p>
           <p>Virtudes: Leal, sincera y sociable.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -307,7 +323,7 @@
           <p>Signo: Sagitario.</p>
           <p>Virtudes: Amistoso, respetuoso y simpatico.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -320,7 +336,7 @@
           <p>Signo: Sagitario.</p>
           <p>Virtudes: Divertido, chukuLaterooo, amable y respetuoso.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -333,7 +349,7 @@
           <p>Signo: Sagitario.</p>
           <p>Virtudes: Cautivador, seductor y arriesgado.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -346,7 +362,7 @@
           <p>signo: Sagitario.</p>
           <p>Virtudes: Leal, creativa y alegre.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -359,7 +375,7 @@
           <p>Signo: Sagitario.</p>
           <p>Virtudes: Empática, resiliente y aguerrida.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -370,7 +386,7 @@
           <h3>🎧 DJ Nuevo 19</h3>
           <p>Descripción del integrante.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -381,7 +397,7 @@
           <h3>🎧 DJ Nuevo 20</h3>
           <p>Descripción del integrante.</p>
           <div class="stats">
-            <button class="like-btn">👍 <span class="like-count">0</span></button>
+            <button class="like-btn"><span class="like-emoji">👍</span> <span class="like-count">0</span></button>
           </div>
         </div>
       </div>
@@ -391,67 +407,308 @@
     <div class="back">
       <a href="index.html">← Volver al inicio</a>
     </div>
+
+    <div class="status" id="global-status">Cargando datos...</div>
   </div> <!-- Cierre container -->
 
   <script>
+/*
+  Sistema de likes con bloqueo por fingerprint (IP + userAgent -> SHA-256)
+  - Hoja principal (SheetDB): columnas ID, NOMBRE, LIKES
+  - Hoja votes (SheetDB): columnas STAFF_ID, FINGERPRINT
+  - SheetDB endpoint: https://sheetdb.io/api/v1/12c925tu2uzxh
+  - Autenticación Basic (username / password) incluida
+*/
+
 const API_URL = 'https://sheetdb.io/api/v1/12c925tu2uzxh';
+const VOTES_SHEET_QUERY = API_URL + '?sheet=votes';
 const username = 'szno87wn';
 const password = '9o5qxrvjl7n7ucm4wfec';
 
-// Crear encabezado Basic Auth
+// Headers para todas las peticiones
 const headers = new Headers();
 headers.set('Authorization', 'Basic ' + btoa(username + ":" + password));
 headers.set('Content-Type', 'application/json');
 
-// ===== Cargar los likes desde SheetDB y actualizar contadores =====
-async function loadLikes() {
+// Estado global
+let FINGERPRINT = null;
+const STATUS_EL = document.getElementById('global-status');
+
+// -----------------------------
+// UTIL: obtener IP pública
+// -----------------------------
+async function fetchPublicIP() {
   try {
-    const res = await fetch(API_URL, { headers: headers });
-    const data = await res.json();
-    const cards = document.querySelectorAll('.card');
-
-    cards.forEach(card => {
-      const member = data.find(m => m.ID === card.dataset.id);
-      if (member) {
-        card.querySelector('.like-count').textContent = member.LIKES || 0;
-      }
-    });
-
-    attachLikeEvents();
-  } catch (err) {
-    console.error('Error cargando likes:', err);
-    attachLikeEvents();
+    const r = await fetch('https://api64.ipify.org?format=json');
+    const j = await r.json();
+    return j.ip || '0.0.0.0';
+  } catch (e) {
+    // Fallback a otra API
+    try {
+      const r = await fetch('https://api.ipify.org?format=json');
+      const j = await r.json();
+      return j.ip || '0.0.0.0';
+    } catch (err) {
+      return '0.0.0.0';
+    }
   }
 }
 
-// ===== Agregar eventos a los botones de like =====
-function attachLikeEvents() {
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
-    const btn = card.querySelector('.like-btn');
-    if (!btn) return; // protege tarjetas sin botón
+// -----------------------------
+// UTIL: SHA-256 (ArrayBuffer -> hex)
+// -----------------------------
+async function sha256Hex(message) {
+  const enc = new TextEncoder();
+  const data = enc.encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
 
-    btn.addEventListener('click', async () => {
+// -----------------------------
+// Generar fingerprint único
+// -----------------------------
+async function generateFingerprint() {
+  const ip = await fetchPublicIP();
+  const ua = navigator.userAgent || 'unknown';
+  const raw = `${ip}::${ua}`;
+  return await sha256Hex(raw);
+}
+
+// -----------------------------
+// Cargar likes desde hoja principal
+// -----------------------------
+async function loadLikesFromSheet() {
+  try {
+    const res = await fetch(API_URL, { headers });
+    if (!res.ok) throw new Error('Error al obtener datos principales');
+    const data = await res.json();
+
+    // data es un array de filas; se asume que columna ID coincide con data-id
+    document.querySelectorAll('.card').forEach(card => {
       const id = card.dataset.id;
-      const span = card.querySelector('.like-count');
-      let count = parseInt(span.textContent) + 1;
-      span.textContent = count;
-
-      try {
-        await fetch(`${API_URL}/ID/${id}`, {
-          method: 'PATCH',
-          headers: headers,
-          body: JSON.stringify({ data: { LIKES: count } })
-        });
-      } catch (err) {
-        console.error('Error actualizando likes:', err);
+      const entry = data.find(row => String(row.ID) === String(id) || String(row.id) === String(id));
+      if (entry) {
+        const count = entry.LIKES || entry.likes || 0;
+        const span = card.querySelector('.like-count');
+        if (span) span.textContent = count;
       }
+    });
+    STATUS_EL.textContent = 'Datos cargados.';
+  } catch (err) {
+    console.error('loadLikesFromSheet:', err);
+    STATUS_EL.textContent = 'No se pudo cargar likes (ver consola).';
+  }
+}
+
+// -----------------------------
+// Verificar si existe voto para staffId + fingerprint en la hoja votes
+// -----------------------------
+async function checkVoteExists(staffId, fingerprint) {
+  try {
+    // Construimos query con nombre exacto de columnas: STAFF_ID y FINGERPRINT
+    const url = `${VOTES_SHEET_QUERY}&STAFF_ID=${encodeURIComponent(staffId)}&FINGERPRINT=${encodeURIComponent(fingerprint)}`;
+    const res = await fetch(url, { headers });
+    if (!res.ok) return false;
+    const data = await res.json();
+    return Array.isArray(data) && data.length > 0;
+  } catch (err) {
+    console.error('checkVoteExists error:', err);
+    // En caso de error conservador: devuelve false (permitir voto localmente),
+    // pero el botón será protegido por localStorage adicional.
+    return false;
+  }
+}
+
+// -----------------------------
+// Registrar voto en hoja votes
+// -----------------------------
+async function postVoteRecord(staffId, fingerprint) {
+  try {
+    // SheetDB acepta { data: { ... } }
+    const body = JSON.stringify({
+      data: {
+        STAFF_ID: staffId,
+        FINGERPRINT: fingerprint,
+        TIMESTAMP: new Date().toISOString()
+      }
+    });
+
+    const res = await fetch(VOTES_SHEET_QUERY, {
+      method: 'POST',
+      headers,
+      body
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error('postVoteRecord fallo: ' + text);
+    }
+
+    return true;
+  } catch (err) {
+    console.error('postVoteRecord error:', err);
+    return false;
+  }
+}
+
+// -----------------------------
+// Actualizar campo LIKES en hoja principal (por ID)
+// -----------------------------
+async function patchLikesInMain(staffId, newLikes) {
+  try {
+    const url = `${API_URL}/ID/${encodeURIComponent(staffId)}`;
+    const body = JSON.stringify({ data: { LIKES: newLikes } });
+
+    const res = await fetch(url, {
+      method: 'PATCH',
+      headers,
+      body
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error('patchLikesInMain fallo: ' + text);
+    }
+    return true;
+  } catch (err) {
+    console.error('patchLikesInMain error:', err);
+    return false;
+  }
+}
+
+// -----------------------------
+// Manejo de eventos en botones
+// -----------------------------
+function attachEventsToButtons() {
+  document.querySelectorAll('.card').forEach(card => {
+    const btn = card.querySelector('.like-btn');
+    const span = card.querySelector('.like-count');
+    const staffId = card.dataset.id;
+
+    if (!btn) return;
+
+    // Estado inicial: disable si localStorage tiene marca (segunda capa)
+    const localKey = `liked_staff_${staffId}`;
+    if (localStorage.getItem(localKey) === '1') {
+      btn.classList.add('disabled');
+      btn.textContent = 'Ya votaste';
+      return;
+    }
+
+    // Click handler
+    btn.addEventListener('click', async function handler(e) {
+      // Desactivar doble-click mientras procesamos
+      btn.disabled = true;
+      btn.classList.add('disabled');
+
+      // Pre-check: si localStorage marcado (capa local) bloquear
+      if (localStorage.getItem(localKey) === '1') {
+        btn.textContent = 'Ya votaste';
+        return;
+      }
+
+      // 1) Verificar en hoja votes si ya existe el voto
+      let already = false;
+      try {
+        already = await checkVoteExists(staffId, FINGERPRINT);
+      } catch (err) {
+        console.error('Error verificando voto existente:', err);
+        // proceed conservatively (we allowed to continue)
+      }
+
+      if (already) {
+        btn.textContent = 'Ya votaste';
+        localStorage.setItem(localKey, '1');
+        return;
+      }
+
+      // 2) Incrementar contador visual
+      const current = parseInt(span.textContent) || 0;
+      const newCount = current + 1;
+      span.textContent = newCount;
+
+      // 3) Registrar en hoja votes y en hoja principal
+      const posted = await postVoteRecord(staffId, FINGERPRINT);
+      if (!posted) {
+        // Si no se guardó el registro de vote, revertimos contador visual y re-habilitamos botón
+        span.textContent = current;
+        btn.disabled = false;
+        btn.classList.remove('disabled');
+        STATUS_EL.textContent = 'Error registrando voto. Intenta de nuevo.';
+        return;
+      }
+
+      const patched = await patchLikesInMain(staffId, newCount);
+      if (!patched) {
+        // Si no se actualizó LIKES en main, esto no elimina el registro en votes (podrías corregir manualmente).
+        STATUS_EL.textContent = 'Voto registrado, pero no se actualizó contador principal (ver consola).';
+      } else {
+        STATUS_EL.textContent = 'Gracias por votar.';
+      }
+
+      // 4) Marcar en localStorage para bloquear en el mismo navegador
+      localStorage.setItem(localKey, '1');
+
+      // 5) Cambiar texto del botón
+      btn.textContent = 'Gracias por votar';
     });
   });
 }
 
-// ===== Inicializar =====
-loadLikes();
+// -----------------------------
+// Inicialización principal
+// -----------------------------
+(async function init() {
+  try {
+    STATUS_EL.textContent = 'Generando fingerprint...';
+    FINGERPRINT = await generateFingerprint();
+
+    STATUS_EL.textContent = 'Cargando likes desde SheetDB...';
+    await loadLikesFromSheet();
+
+    STATUS_EL.textContent = 'Verificando votos locales y del servidor...';
+
+    // Para cada tarjeta, comprobamos en la hoja votes si ya votó y deshabilitamos el botón si corresponde.
+    const cards = Array.from(document.querySelectorAll('.card'));
+    await Promise.all(cards.map(async (card) => {
+      const staffId = card.dataset.id;
+      const btn = card.querySelector('.like-btn');
+      const localKey = `liked_staff_${staffId}`;
+
+      // Si localStorage ya indica voto, deshabilitar inmediatamente
+      if (localStorage.getItem(localKey) === '1') {
+        if (btn) {
+          btn.classList.add('disabled');
+          btn.textContent = 'Ya votaste';
+        }
+        return;
+      }
+
+      // Si no, consultamos la hoja votes
+      const exists = await checkVoteExists(staffId, FINGERPRINT);
+      if (exists) {
+        // Marcar localmente para futuras visitas
+        localStorage.setItem(localKey, '1');
+        if (btn) {
+          btn.classList.add('disabled');
+          btn.textContent = 'Ya votaste';
+        }
+      }
+    }));
+
+    // Finalmente, asociamos manejadores a los botones
+    attachEventsToButtons();
+
+    STATUS_EL.textContent = 'Listo.';
+  } catch (err) {
+    console.error('Inicialización error:', err);
+    STATUS_EL.textContent = 'Error durante la inicialización (ver consola).';
+    // Aun así attach events para permitir pruebas locales
+    attachEventsToButtons();
+  }
+})();
   </script>
 
 </body>
