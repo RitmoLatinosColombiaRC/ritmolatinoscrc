@@ -1,209 +1,458 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Ritmo Latinos</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff – Ritmo Latinos Colombia Radio Chat</title>
+  <link rel="icon" href="img/LogoRL.jpg" type="image/jpeg">
 
-    <style>
-        body {
-            background-color: #0e0f13;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        .grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .card {
-            background-color: #16202a;
-            width: 300px;
-            border-radius: 12px;
-            overflow: hidden;
-            padding-bottom: 20px;
-            text-align: center;
-            border: 2px solid #1f2a34;
-        }
-
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .card h3 {
-            color: #00e4ff;
-            margin-top: 10px;
-        }
-
-        .like-btn {
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .like-btn:disabled {
-            background-color: gray !important;
-            cursor: not-allowed;
-        }
-
-        .likes {
-            display: block;
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
-
-</head>
-<body>
-
-    <h1 style="text-align:center;">Staff Ritmo Latinos</h1>
-
-    <div class="grid">
-
-        <!-- TARJETA DE EJEMPLO: DJ CUERVO -->
-        <div class="card" data-id="9">
-            <img src="img/cuervo.jpg">
-            <h3>DJ Cuervo</h3>
-            <p>Cumpleaños: 24/04.<br>Signo: Tauro.<br>Virtudes: Escuchar, paciente y tolerante.</p>
-            <span class="likes">0 Likes</span>
-            <button class="like-btn">Votar</button>
-        </div>
-
-        <!-- TARJETA EJEMPLO: DJ lalala (ID 10) -->
-        <div class="card" data-id="10">
-            <img src="img/lalala.jpg">
-            <h3>DJ lalala</h3>
-            <p>Cumpleaños: 01/06.<br>Signo: Géminis.<br>Virtudes: Amorosa, sincera y humanitaria.</p>
-            <span class="likes">0 Likes</span>
-            <button class="like-btn">Votar</button>
-        </div>
-
-        <!-- TARJETA EJEMPLO: DJ AlbertDJ -->
-        <div class="card" data-id="11">
-            <img src="img/albert.jpg">
-            <h3>DJ AlbertDJ</h3>
-            <p>Cumpleaños: 16/06.<br>Signo: Virgo.<br>Virtudes: Simpático, alegre y optimista.</p>
-            <span class="likes">0 Likes</span>
-            <button class="like-btn">Votar</button>
-        </div>
-
-        <!-- TARJETA EJEMPLO: DJ MaRcElO -->
-        <div class="card" data-id="12">
-            <img src="img/marcelo.jpg">
-            <h3>DJ MaRcElO-2180</h3>
-            <p>Cumpleaños: 21/09.<br>Signo: Virgo.<br>Virtudes: Alegre, extrovertido y servicial.</p>
-            <span class="likes">0 Likes</span>
-            <button class="like-btn">Votar</button>
-        </div>
-
-    </div>
-
-<script>
-const BASE_URL = "https://sheetdb.io/api/v1/12c925tu2uzxh";
-
-// Genera un fingerprint simple usando IP + userAgent
-async function generateFingerprint() {
-    let ip = await fetch("https://api.ipify.org?format=json")
-        .then(r => r.json())
-        .then(d => d.ip)
-        .catch(() => "0.0.0.0");
-
-    return ip + "_" + navigator.userAgent;
-}
-
-// Cargar Likes iniciales
-async function loadLikes() {
-    const cards = document.querySelectorAll(".card");
-
-    for (let card of cards) {
-        const id = card.getAttribute("data-id");
-        const likeSpan = card.querySelector(".likes");
-        const btn = card.querySelector(".like-btn");
-
-        const res = await fetch(`${BASE_URL}/search?sheet=Sheet1&ID=${id}`);
-        const data = await res.json();
-
-        if (data.length > 0) {
-            const likes = data[0].likes ? parseInt(data[0].likes) : 0;
-            likeSpan.textContent = `${likes} Likes`;
-        }
-
-        // Verificar si ya votó
-        const fingerprint = await generateFingerprint();
-        const checkVote = await fetch(`${BASE_URL}/search?sheet=votes&FINGERPRINT=${fingerprint}`);
-        const voteData = await checkVote.json();
-
-        if (voteData.length > 0 && voteData[0].STAFF_ID == id) {
-            btn.disabled = true;
-            btn.textContent = "Ya votaste";
-        }
+  <style>
+    /* ===== Estilos generales ===== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0c10;
+      color: #fff;
     }
-}
 
-// Acción de voto
-async function sendVote(id, card) {
-    const btn = card.querySelector(".like-btn");
-    const likeSpan = card.querySelector(".likes");
+    h1 {
+      text-align: center;
+      padding: 20px 0;
+      font-size: 2.2rem;
+      color: #ffcc00;
+    }
 
-    btn.disabled = true;
-    btn.textContent = "Votando...";
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-    const fingerprint = await generateFingerprint();
+    /* ===== Grid de tarjetas ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-    // Registrar voto
-    await fetch(`${BASE_URL}?sheet=votes`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            STAFF_ID: id,
-            FINGERPRINT: fingerprint
-        })
-    });
+    /* ===== Tarjeta del staff ===== */
+    .card {
+      background: #1f2833;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      transition: 0.3s;
+    }
 
-    // Obtener likes actuales
-    const res = await fetch(`${BASE_URL}/search?sheet=Sheet1&ID=${id}`);
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card-img {
+      height: 180px;
+      background: #4b4c63;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: #ccc;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .info {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .info h3 {
+      margin: 10px 0;
+      font-size: 1.4rem;
+      color: #66fcf1;
+    }
+
+    .info p {
+      font-size: 0.9rem;
+      color: #c5c6c7;
+    }
+
+    /* ===== Botón de Me gusta ===== */
+    .stats {
+      display: flex;
+      justify-content: center;
+      background: #0b0c10;
+      padding: 10px 0;
+      margin-top: 10px;
+    }
+
+    .like-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      background: #66fcf1;
+      color: #0b0c10;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 15px;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .like-btn:hover {
+      background: #45a29e;
+    }
+
+    /* ===== Botón de regreso ===== */
+    .back {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back a {
+      color: #66fcf1;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>💫 Nuestro Staff 💫</h1>
+  
+  <div class="container">
+    <div class="grid" id="staff-grid">
+
+      <!-- Tarjeta 1 -->
+      <div class="card" data-id="1">
+        <div class="card-img" style="background-image: url('img/Djatomico.jpg');"></div>
+        <div class="info">
+          <h3>🎧 Founder, DJ Atomico</h3>
+          <p>Cumpleaños: 30/12.</p>
+          <p>Signo: Capricornio.</p>
+          <p>Virtudes: Ser el Big Boss.</p>
+          <p>Programa: Llena tu cabeza de rock.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="card" data-id="2">
+        <div class="card-img" style="background-image: url('img/DjMariobros.png');"></div>
+        <div class="info">
+          <h3>🎧 CoFounder, DJ MarioBros</h3>
+          <p>Cumpleaños: 12/02.</p>
+          <p>Signo: Acuario.</p>
+          <p>Virtudes: Hacer el bien, sin mirar a quien.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="card" data-id="3">
+        <div class="card-img" style="background-image: url('img/DjCucarachita.png');"></div>
+        <div class="info">
+          <h3>🎧 Admin, DJ CucarachitaPR</h3>
+          <p>Cumpleaños: 23/12.</p>
+          <p>Signo: Carpicornio.</p>
+          <p>Virtudes: Honesta, simpática, empática.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 4 -->
+      <div class="card" data-id="4">
+        <div class="card-img" style="background-image: url('img/DjRomi.png');"></div>
+        <div class="info">
+          <h3>🎧 Admin, DJ RoMi</h3>
+          <p>Cumpleaños: 10/09.</p>
+          <p>Signo: Virgo.</p>
+          <p>Virtudes: Empatica, sincera y critica.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 5 -->
+      <div class="card" data-id="5">
+        <div class="card-img" style="background-image: url('img/Djbrandy.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ BrAnDy</h3>
+          <p>Cumpleaños: 21/01.</p>
+          <p>Signo: Acuario.</p>
+          <p>Virtudes: Servicial, independiente y visionaria.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas 6 a 20 -->
+      <div class="card" data-id="6">
+        <div class="card-img" style="background-image: url('img/papasfritas.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Papas_fritas</h3>
+          <p>Cumpleaños: 30/01.</p>
+          <p>Signo: Acuario.</p>
+          <p>Virtudes: Paciencia, templanza, perseverancia.</p>
+           <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="7">
+        <div class="card-img" style="background-image: url('img/shaplin.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ Shaplin</h3>
+          <p>Cumpleaños: 30/01.</p>
+          <p>Signo: Acuario.</p>
+          <p>Virtudes: Respetuoso. introvertido y carismatico.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="8">
+        <div class="card-img" style="background-image: url('img/LogoRL.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Lynda</h3>
+          <p>Cumpleaños: 20/04</p>
+          <p>Signo: Aries.</p>
+          <p>Virtudes: Sincera, tierna y roamntica.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="9">
+        <div class="card-img" style="background-image: url('img/cuervo.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ Cuervo</h3>
+          <p>Cumpleaños: 24/04.</p>
+          <p>Signo: Tauro.</p>
+          <p>Virtudes: Escuchar, paciente y tolerante.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="10">
+        <div class="card-img" style="background-image: url('img/lalala.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ lalala</h3>
+          <p>Cunpleaños: 01/06.</p>
+          <p>Signo: Géminis.</p>
+          <p>Virtudes: Amorosa, sincera y humanitaria.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="11">
+        <div class="card-img" style="background-image: url('img/albertdj.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Albertdj</h3>
+          <p>Cumpleaños: 16/06.</p>
+          <p>Signo: Virgo.</p>
+          <p>Virtudes: Simpatico, alegre y optimista..</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="12">
+        <div class="card-img" style="background-image: url('img/LogoRL.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ MaRcElO-2180</h3>
+          <p>Cumpleaños: 21/09.</p>
+          <p>Signo: Virgo.</p>
+          <p>Virtudes: Alegre, extrovertido y servicial.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="13">
+        <div class="card-img" style="background-image: url('img/andrea.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ Andrea</h3>
+          <p>Cumpleaños: 01/10.</p>
+          <p>Signo: Libra.</p>
+          <p>Virtudes: Leal, sincera y sociable.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="14">
+        <div class="card-img" style="background-image: url('img/errante.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ ERRANTE_DEL_SOL</h3>
+          <p>Cumpleaños: 06/12.</p>
+          <p>Signo: Sagitario.</p>
+          <p>Virtudes: Amistoso, respetuoso y simpatico.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="15">
+        <div class="card-img" style="background-image: url('img/xaxixax.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ XAXIXAX</h3>
+          <p>Cumpleaños: 07/12.</p>
+          <p>Signo: Sagitario.</p>
+          <p>Virtudes: Divertido, chukuLaterooo, amable y respetuoso.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="16">
+        <div class="card-img" style="background-image: url('img/pompompuri.png');"></div>
+        <div class="info">
+          <h3>🎧 DJ Pompompuri</h3>
+          <p>Cumpleaños: 11/12.</p>
+          <p>Signo: Sagitario.</p>
+          <p>Virtudes: Cautivador, seductor y arriesgado.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="17">
+        <div class="card-img" style="background-image: url('img/kalanys.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Kalanys</h3>
+          <p>Cumpleaños: 17/12.</p>
+          <p>signo: Sagitario.</p>
+          <p>Virtudes: Leal, creativa y alegre.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="18">
+        <div class="card-img" style="background-image: url('img/valquiria.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Valquiria</h3>
+          <p>Cumpleaños: 17/12.</p>
+          <p>Signo: Sagitario.</p>
+          <p>Virtudes: Empática, resiliente y aguerrida.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="19">
+        <div class="card-img" style="background-image: url('img/LogoRL.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Nuevo 19</h3>
+          <p>Descripción del integrante.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-id="20">
+        <div class="card-img" style="background-image: url('img/LogoRL.jpg');"></div>
+        <div class="info">
+          <h3>🎧 DJ Nuevo 20</h3>
+          <p>Descripción del integrante.</p>
+          <div class="stats">
+            <button class="like-btn">👍 <span class="like-count">0</span></button>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- Cierre grid -->
+
+    <div class="back">
+      <a href="index.html">← Volver al inicio</a>
+    </div>
+  </div> <!-- Cierre container -->
+
+  <script>
+const API_URL = 'https://sheetdb.io/api/v1/12c925tu2uzxh';
+const username = 'szno87wn';
+const password = '9o5qxrvjl7n7ucm4wfec';
+
+// Crear encabezado Basic Auth
+const headers = new Headers();
+headers.set('Authorization', 'Basic ' + btoa(username + ":" + password));
+headers.set('Content-Type', 'application/json');
+
+// ===== Cargar los likes desde SheetDB y actualizar contadores =====
+async function loadLikes() {
+  try {
+    const res = await fetch(API_URL, { headers: headers });
     const data = await res.json();
+    const cards = document.querySelectorAll('.card');
 
-    let currentLikes = data[0].likes ? parseInt(data[0].likes) : 0;
-    let updatedLikes = currentLikes + 1;
-
-    // Actualizar likes
-    await fetch(`${BASE_URL}/ID/${id}?sheet=Sheet1`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ LIKES: updatedLikes })
+    cards.forEach(card => {
+      const member = data.find(m => m.ID === card.dataset.id);
+      if (member) {
+        card.querySelector('.like-count').textContent = member.LIKES || 0;
+      }
     });
 
-    // Actualiza en pantalla
-    likeSpan.textContent = `${updatedLikes} Likes`;
-    btn.textContent = "Ya votaste";
+    attachLikeEvents();
+  } catch (err) {
+    console.error('Error cargando likes:', err);
+    attachLikeEvents();
+  }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// ===== Agregar eventos a los botones de like =====
+function attachLikeEvents() {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const btn = card.querySelector('.like-btn');
+    if (!btn) return; // protege tarjetas sin botón
 
-    loadLikes();
+    btn.addEventListener('click', async () => {
+      const id = card.dataset.id;
+      const span = card.querySelector('.like-count');
+      let count = parseInt(span.textContent) + 1;
+      span.textContent = count;
 
-    document.querySelectorAll(".card").forEach(card => {
-        const id = card.getAttribute("data-id");
-        const btn = card.querySelector(".like-btn");
-
-        btn.addEventListener("click", () => sendVote(id, card));
+      try {
+        await fetch(`${API_URL}/ID/${id}`, {
+          method: 'PATCH',
+          headers: headers,
+          body: JSON.stringify({ data: { LIKES: count } })
+        });
+      } catch (err) {
+        console.error('Error actualizando likes:', err);
+      }
     });
+  });
+}
 
-});
-</script>
+// ===== Inicializar =====
+loadLikes();
+  </script>
 
 </body>
 </html>
