@@ -280,10 +280,22 @@
       </div>
       <p class="lead-small muted">Aquí celebramos a nuestra comunidad.</p>
 		<div class="grid" style="margin-top:14px;">
-        <div class="card"><h3>Hoy</h3><p class="muted">No hay cumpleaños hoy. Envía la fecha para aparecer en la lista.</p></div>
-        <div class="card"><h3>Esta Semana</h3><p class="muted">Lista de usuarios con cumpleaños.</p></div>
-        <div class="card"><h3>Próximos</h3><p class="muted">Planificación de saludos y dedicatorias.</p></div>
-      </div>
+		  <div class="card">
+			<h3>Hoy</h3>
+			<p class="muted" id="cumple-hoy">Cargando...</p>
+		  </div>
+
+		  <div class="card">
+			<h3>Esta Semana</h3>
+			<p class="muted" id="cumple-semana">Cargando...</p>
+		  </div>
+
+		  <div class="card">
+			<h3>Próximos</h3>
+			<p class="muted" id="cumple-proximos">Cargando...</p>
+		  </div>
+		</div>
+
 		<div style="margin: 14px 0 22px 0;">
   <a href="cumpleanos.html"
      style="
@@ -643,6 +655,64 @@ A principios del año 2020 volvimos con ideas frescas las cuales iremos mostrand
   </script>
   <script src="https://player.streamerr.co/player/bundle.js"></script>
   <script src="https://player.streamerr.co/player/init.js"></script>
+  
+  <script>
+const API_URL = "https://sheetdb.io/api/v1/yp7jm73966je1";
+
+fetch(API_URL)
+  .then(res => res.json())
+  .then(data => {
+    const hoy = [];
+    const semana = [];
+    const proximos = [];
+
+    const hoyFecha = new Date();
+    hoyFecha.setHours(0,0,0,0);
+
+    data.forEach(row => {
+      // aceptar TRUE o true
+      if (!(row.activo === "TRUE" || row.activo === true)) return;
+      if (!row.dj || !row.fecha_nacimiento) return;
+
+      // formato DD-MM
+      const [day, month] = row.fecha_nacimiento.split("-");
+      let cumple = new Date(
+        hoyFecha.getFullYear(),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10)
+      );
+      cumple.setHours(0,0,0,0);
+
+      let diff = Math.round((cumple - hoyFecha) / (1000 * 60 * 60 * 24));
+
+      // si ya pasó este año, mover al siguiente
+      if (diff < 0) {
+        cumple.setFullYear(cumple.getFullYear() + 1);
+        diff = Math.round((cumple - hoyFecha) / (1000 * 60 * 60 * 24));
+      }
+
+      const texto = `🎉 <strong>${row.dj}</strong> — ${row.mensaje || ""}`;
+
+      if (diff === 0) hoy.push(texto);
+      else if (diff <= 7) semana.push(texto);
+      else if (diff <= 30) proximos.push(texto);
+    });
+
+    document.getElementById("cumple-hoy").innerHTML =
+      hoy.length ? hoy.join("<br>") : "No hay cumpleaños hoy.";
+
+    document.getElementById("cumple-semana").innerHTML =
+      semana.length ? semana.join("<br>") : "Sin cumpleaños esta semana.";
+
+    document.getElementById("cumple-proximos").innerHTML =
+      proximos.length ? proximos.join("<br>") : "No hay cumpleaños próximos.";
+  })
+  .catch(err => {
+    console.error("Error cumpleaños:", err);
+    document.getElementById("cumple-hoy").innerText =
+      "Error al cargar cumpleaños.";
+  });
+</script>
 
 </body>
 </html>
