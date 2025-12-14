@@ -540,13 +540,9 @@ A principios del año 2020 volvimos con ideas frescas las cuales iremos mostrand
 			    placeholder="Escribe tu mensaje"
 			    style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:#070707;color:#fff;"></textarea><br><br>
 			
-			  <button
-			    class="btn g-recaptcha"
-			    type="submit"
-			    data-sitekey="6LePnCssAAAAAJsbkditJw4lMyKkGdJLkurEab3T"
-			    data-callback="onSubmit">
-			    Enviar
-			  </button>
+			  <button class="btn" type="submit">
+				  Enviar
+				</button>
 			</form>
 
           </div>
@@ -736,10 +732,15 @@ fetch(API_URL)
   });
 </script>
 	
-	<script src="https://www.google.com/recaptcha/api.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js?render=explicit"></script>
 
 <script>
   const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // bloquea envío normal
+    grecaptcha.execute(); // 🚀 ejecuta reCAPTCHA
+  });
 
   function onSubmit(token) {
     const formData = new FormData(form);
@@ -751,7 +752,7 @@ fetch(API_URL)
     })
     .then(response => {
       if (response.ok) {
-        form.reset(); // ✅ ahora sí se limpia correctamente
+        form.reset(); // ✅ ahora sí se limpia
       } else {
         console.error("Formspree rechazó el envío");
       }
@@ -759,9 +760,14 @@ fetch(API_URL)
     .catch(err => console.error("Error de red:", err));
   }
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault(); // evita cualquier redirección
-  });
+  // Inicializa reCAPTCHA invisible
+  window.onload = function () {
+    grecaptcha.render(document.createElement("div"), {
+      sitekey: "6LePnCssAAAAAJsbkditJw4lMyKkGdJLkurEab3T",
+      callback: onSubmit,
+      size: "invisible"
+    });
+  };
 </script>
 
 </body>
