@@ -655,7 +655,8 @@ A principios del año 2020 volvimos con ideas frescas las cuales iremos mostrand
   </script>
   <script src="https://player.streamerr.co/player/bundle.js"></script>
   <script src="https://player.streamerr.co/player/init.js"></script>
-  
+	
+  //Script para la obtencion de los cumpleaños. 
   <script>
 const API_URL = "https://sheetdb.io/api/v1/yp7jm73966je1";
 
@@ -669,12 +670,17 @@ fetch(API_URL)
     const hoyFecha = new Date();
     hoyFecha.setHours(0,0,0,0);
 
+    // Array de nombres de meses en español
+    const meses = [
+      "enero", "febrero", "marzo", "abril", "mayo", "junio",
+      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+
     data.forEach(row => {
-      // aceptar TRUE o true
       if (!(row.activo === "TRUE" || row.activo === true)) return;
       if (!row.dj || !row.fecha_nacimiento) return;
 
-      // formato DD-MM
+      // separar día y mes
       const [day, month] = row.fecha_nacimiento.split("-");
       let cumple = new Date(
         hoyFecha.getFullYear(),
@@ -691,7 +697,10 @@ fetch(API_URL)
         diff = Math.round((cumple - hoyFecha) / (1000 * 60 * 60 * 24));
       }
 
-      const texto = `🎉 <strong>${row.dj}</strong> — ${row.mensaje || ""}`;
+      // formatear fecha: "15 de marzo"
+      const fechaFormateada = `${parseInt(day, 10)} de ${meses[parseInt(month, 10)-1]}`;
+
+      const texto = `🎉 <strong>${row.dj}</strong> - ${fechaFormateada}${row.mensaje ? " - " + row.mensaje : ""}`;
 
       if (diff === 0) hoy.push(texto);
       else if (diff <= 7) semana.push(texto);
