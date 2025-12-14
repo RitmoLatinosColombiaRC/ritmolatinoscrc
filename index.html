@@ -613,6 +613,8 @@ A principios del año 2020 volvimos con ideas frescas las cuales iremos mostrand
     <!-- FOOTER -->
     <footer>
       © 2014 - 2025 Ritmo Latinos Colombia Radio Chat — La radio que prende tus sentidos.
+		 <br>
+		👀 Visitas totales: <span id="contador-visitas">Cargando...</span>
     </footer>
   </main>
 
@@ -712,6 +714,28 @@ fetch(API_URL)
     document.getElementById("cumple-hoy").innerText =
       "Error al cargar cumpleaños.";
   });
+</script>
+
+	<script>
+(function () {
+  const namespace = "ritmolatinoscrc";
+  const key = "homepage";
+
+  fetch(`https://api.countapi.xyz/update/${namespace}/${key}?amount=1`)
+    .then(res => res.json())
+    .then(data => {
+      if (data && typeof data.value === "number") {
+        document.getElementById("contador-visitas").textContent =
+          data.value.toLocaleString("es-CO");
+      } else {
+        document.getElementById("contador-visitas").textContent = "0";
+      }
+    })
+    .catch(err => {
+      console.error("Contador error:", err);
+      document.getElementById("contador-visitas").textContent = "0";
+    });
+})();
 </script>
 
 </body>
