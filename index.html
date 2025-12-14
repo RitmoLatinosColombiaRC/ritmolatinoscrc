@@ -529,27 +529,13 @@ A principios del año 2020 volvimos con ideas frescas las cuales iremos mostrand
           <div class="card">
             <h3>Formulario</h3>
             <p class="muted">Puedes usar este pequeño formulario (se envía por mail si lo configuras con un servicio).</p>
-          	<form id="contact-form">
-			  <label class="muted" style="font-size:0.9rem;">Nombre</label><br>
-			  <input name="name" required placeholder="Tu nombre"
-			    style="width:100%;padding:8px;margin-top:6px;border-radius:8px;
-			    border:1px solid rgba(255,255,255,0.06);background:#070707;color:#fff;"><br><br>
-			
-			  <label class="muted" style="font-size:0.9rem;">Mensaje</label><br>
-			  <textarea name="message" required rows="4" placeholder="Escribe tu mensaje"
-			    style="width:100%;padding:8px;margin-top:6px;border-radius:8px;
-			    border:1px solid rgba(255,255,255,0.06);background:#070707;color:#fff;"></textarea><br><br>
-			
-			  <button
-			    class="btn g-recaptcha"
-			    data-sitekey="6LePnCssAAAAAJsbkditJw4lMyKkGdJLkurEab3T"
-			    data-callback="onSubmit"
-			    data-size="invisible">
-			    Enviar
-			  </button>
-			</form>
-
-			</form>
+          	<form action="https://formspree.io/f/xyzrvdan" method="POST">
+              <label class="muted" style="font-size:0.9rem;">Nombre</label><br>
+              <input name="name" placeholder="Tu nombre" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:#070707;color:#fff;"><br><br>
+              <label class="muted" style="font-size:0.9rem;">Mensaje</label><br>
+              <textarea name="message" placeholder="Escribe tu mensaje" rows="4" style="width:100%;padding:8px;margin-top:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:#070707;color:#fff;"></textarea><br><br>
+              <button class="btn" type="submit">Enviar</button>
+            </form>
           </div>
         </div>
       </div>
@@ -736,35 +722,5 @@ fetch(API_URL)
       "Error al cargar cumpleaños.";
   });
 </script>
-	
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-<script>
-function onSubmit(token) {
-  const form = document.getElementById("contact-form");
-
-  fetch("https://solitary-union-2d50.everon1980.workers.dev", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: form.name.value,
-      message: form.message.value,
-      token: token
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      form.reset(); // ✅ LIMPIA EL FORMULARIO
-      alert("Mensaje enviado correctamente");
-    } else {
-      alert("Error al enviar el mensaje");
-    }
-  })
-  .catch(() => alert("Error de conexión"));
-}
-</script>
-
-
 </body>
 </html>
